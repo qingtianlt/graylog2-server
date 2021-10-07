@@ -114,6 +114,7 @@ const DashboardSearchBar = ({ config, globalOverride, disableSearch = false, onE
                     <StyledTimeRangeInput disabled={disableSearch}
                                           onChange={(nextTimeRange) => setFieldValue('timerange', nextTimeRange)}
                                           value={values?.timerange}
+                                          limitDuration={limitDuration}
                                           hasErrorOnMount={!isValid}
                                           noOverride />
                     <RefreshControlsWrapper>
