@@ -15,7 +15,7 @@
  * <http://www.mongodb.com/licensing/server-side-public-license>.
  */
 import * as React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
@@ -25,6 +25,7 @@ import type { FormikProps } from 'formik';
 import { onInitializingTimerange, onSubmittingTimerange } from 'views/components/TimerangeForForm';
 import type { SearchBarFormValues } from 'views/Constants';
 import validateTimeRange from 'views/components/TimeRangeValidation';
+import DateTimeContext from 'contexts/DateTimeContext';
 
 type Props = {
   children: ((props: FormikProps<SearchBarFormValues>) => React.ReactNode) | React.ReactNode,
@@ -52,6 +53,7 @@ export const normalizeSearchBarFormValues = ({ timerange, streams, queryString }
 };
 
 const SearchBarForm = ({ initialValues, limitDuration, onSubmit, children, validateOnMount, formRef }: Props) => {
+  const { unifyTime } = useContext(DateTimeContext);
   const _onSubmit = useCallback(({ timerange, streams, queryString }) => {
     return onSubmit(normalizeSearchBarFormValues({ timerange, streams, queryString }));
   }, [onSubmit]);
@@ -68,7 +70,7 @@ const SearchBarForm = ({ initialValues, limitDuration, onSubmit, children, valid
             enableReinitialize
             onSubmit={_onSubmit}
             innerRef={formRef}
-            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration)}
+            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration, unifyTime)}
             validateOnMount={validateOnMount}>
       {(...args) => (
         <StyledForm>

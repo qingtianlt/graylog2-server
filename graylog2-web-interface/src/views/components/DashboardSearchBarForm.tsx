@@ -15,7 +15,7 @@
  * <http://www.mongodb.com/licensing/server-side-public-license>.
  */
 import * as React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import { isFunction } from 'lodash';
@@ -23,6 +23,7 @@ import type { FormikProps } from 'formik';
 
 import type { TimeRange } from 'views/logic/queries/Query';
 import validateTimeRange from 'views/components/TimeRangeValidation';
+import DateTimeContext from 'contexts/DateTimeContext';
 
 import { onInitializingTimerange, onSubmittingTimerange } from './TimerangeForForm';
 
@@ -41,6 +42,7 @@ type Props = {
 const _isFunction = (children: Props['children']): children is (props: FormikProps<Values>) => React.ReactElement => isFunction(children);
 
 const DashboardSearchForm = ({ initialValues, limitDuration, onSubmit, children }: Props) => {
+  const { unifyTime } = useContext(DateTimeContext);
   const _onSubmit = useCallback(({ timerange, queryString }) => {
     return onSubmit({
       timerange: Object.keys(timerange).length ? onSubmittingTimerange(timerange) : undefined,
@@ -59,7 +61,7 @@ const DashboardSearchForm = ({ initialValues, limitDuration, onSubmit, children 
     <Formik initialValues={_initialValues}
             enableReinitialize
             onSubmit={_onSubmit}
-            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration)}
+            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration, unifyTime)}
             validateOnMount>
       {(...args) => (
         <Form>
