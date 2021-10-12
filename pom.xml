@@ -489,5 +489,45 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <!-- Run "mvn -Penforcer validate" to check output -->
+            <id>enforcer</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-versions</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <fail>true</fail>
+                                    <failFast>false</failFast>
+                                    <rules>
+                                        <banDuplicatePomDependencyVersions/>
+                                        <dependencyConvergence/>
+                                        <requireMavenVersion>
+                                            <version>3.6.3</version>
+                                        </requireMavenVersion>
+                                        <requireJavaVersion>
+                                            <version>1.8</version>
+                                        </requireJavaVersion>
+                                        <requireOS>
+                                            <family>unix</family>
+                                        </requireOS>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
