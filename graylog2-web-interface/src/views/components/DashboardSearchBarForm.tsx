@@ -42,15 +42,15 @@ type Props = {
 const _isFunction = (children: Props['children']): children is (props: FormikProps<Values>) => React.ReactElement => isFunction(children);
 
 const DashboardSearchForm = ({ initialValues, limitDuration, onSubmit, children }: Props) => {
-  const { unifyTime, unifyTimeAsDate } = useContext(DateTimeContext);
+  const { formatTime, adjustTimezone } = useContext(DateTimeContext);
   const _onSubmit = useCallback(({ timerange, queryString }) => {
     return onSubmit({
-      timerange: Object.keys(timerange).length ? onSubmittingTimerange(timerange, unifyTimeAsDate) : undefined,
+      timerange: Object.keys(timerange).length ? onSubmittingTimerange(timerange, adjustTimezone) : undefined,
       queryString,
     });
-  }, [onSubmit, unifyTimeAsDate]);
+  }, [onSubmit, adjustTimezone]);
   const { timerange, queryString } = initialValues;
-  const initialTimeRange = timerange ? onInitializingTimerange(timerange, unifyTime) : {};
+  const initialTimeRange = timerange ? onInitializingTimerange(timerange, formatTime) : {};
   const _initialValues = {
     timerange: initialTimeRange,
     nextTimeRange: initialTimeRange,
@@ -61,7 +61,7 @@ const DashboardSearchForm = ({ initialValues, limitDuration, onSubmit, children 
     <Formik initialValues={_initialValues}
             enableReinitialize
             onSubmit={_onSubmit}
-            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration, unifyTime)}
+            validate={({ timerange: nextTimeRange }) => validateTimeRange(nextTimeRange, limitDuration, formatTime)}
             validateOnMount>
       {(...args) => (
         <Form>
