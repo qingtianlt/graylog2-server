@@ -182,4 +182,8 @@ public class QueryEngine {
     private QueryBackend<? extends GeneratedQueryContext> getQueryBackend(Query query) {
         return elasticsearchBackend;
     }
+
+    public SuggestionResponse suggest(SuggestRequest req) {
+        return elasticsearchBackend.suggest(req);
+    }
 }

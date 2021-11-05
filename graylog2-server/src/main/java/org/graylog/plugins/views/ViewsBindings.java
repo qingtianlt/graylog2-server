@@ -60,6 +60,7 @@ import org.graylog.plugins.views.search.rest.QualifyingViewsResource;
 import org.graylog.plugins.views.search.rest.SavedSearchesResource;
 import org.graylog.plugins.views.search.rest.SearchMetadataResource;
 import org.graylog.plugins.views.search.rest.SearchResource;
+import org.graylog.plugins.views.search.rest.SuggestionsResource;
 import org.graylog.plugins.views.search.rest.ViewsResource;
 import org.graylog.plugins.views.search.rest.ViewsRestPermissions;
 import org.graylog.plugins.views.search.rest.contexts.SearchUserBinder;
@@ -127,6 +128,7 @@ public class ViewsBindings extends ViewsModule {
         addSystemRestResource(SearchResource.class);
         addSystemRestResource(SearchMetadataResource.class);
         addSystemRestResource(ViewsResource.class);
+        addSystemRestResource(SuggestionsResource.class);
 
         addPermissions(ViewsRestPermissions.class);
 
