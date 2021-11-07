@@ -20,7 +20,7 @@ import React from 'react';
 import { LinkContainer, Link } from 'components/common/router';
 import connect from 'stores/connect';
 import { Button, ButtonToolbar } from 'components/bootstrap';
-import { DataTable, Timestamp } from 'components/common';
+import { DataTable, RelativeTime } from 'components/common';
 import { MetricContainer, CounterRate } from 'components/metrics';
 import Routes from 'routing/Routes';
 import { RulesActions, RulesStore } from 'stores/rules/RulesStore';
@@ -91,8 +91,8 @@ class RuleList extends React.Component<Props, State> {
           </Link>
         </td>
         <td className="limited">{rule.description}</td>
-        <td className="limited"><Timestamp dateTime={rule.created_at} relative /></td>
-        <td className="limited"><Timestamp dateTime={rule.modified_at} relative /></td>
+        <td className="limited"><RelativeTime dateTime={rule.created_at} /></td>
+        <td className="limited"><RelativeTime dateTime={rule.modified_at} /></td>
         <td>
           <MetricContainer name={`org.graylog.plugins.pipelineprocessor.ast.Rule.${rule.id}.executed`} zeroOnMissing>
             <CounterRate suffix="msg/s" />
