@@ -101,7 +101,7 @@ const useBindApplySearchControlsChanges = (formRef) => {
 
       return undefined;
     });
-  }, [formRef, bindApplySearchControlsChanges]);
+  }, [formRef, bindApplySearchControlsChanges, adjustTimezone]);
 };
 
 const WidgetQueryControls = ({ availableStreams, globalOverride }: Props) => {
